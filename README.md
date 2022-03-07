@@ -2,7 +2,7 @@
  Topcoder : Train Manager Advance
  
  
-## Memasukkan data dummy : 
+## Memasukkan Data Dummy
 
 Request POST ke ```localhost:8080/api/trains``` lalu masukkan data raw dalam format JSON :
 
