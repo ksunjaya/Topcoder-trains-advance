@@ -4,7 +4,7 @@
  
 ## Memasukkan Data Dummy
 
-Request POST ke ```localhost:8080/api/trains``` lalu masukkan data raw dalam format JSON :
+Request POST ke ```localhost:8080/api/trains``` dengan data raw dalam format JSON :
 
 ```json
 [
