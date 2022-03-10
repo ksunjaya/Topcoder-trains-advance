@@ -73,4 +73,9 @@ public class Train {
     
     public void setAmenities(String amenities) {this.amenities = amenities;}
     public String getAmenities() {return this.amenities;}
+    
+    @Override
+    public String toString() { 
+    	return this.name + "\n" + this.description + "\n" + this.distanceBetweenStop + "\n" + this.maxSpeed + "\n" + this.sharingTracks + "\n";
+    }
 }
