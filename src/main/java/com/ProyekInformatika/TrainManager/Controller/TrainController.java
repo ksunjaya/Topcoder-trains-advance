@@ -1,5 +1,6 @@
 package com.ProyekInformatika.TrainManager.Controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ public class TrainController {
 	TrainRepository trainRepository;
 	
 	@PostMapping("/trains")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") // Kalo user login sebagai user biasa atau admin boleh akses
 	public ResponseEntity<List<Train>> createTrain(@RequestBody List<Train> trains){
 		try {
 			for(Train t : trains) System.out.println(t.toString());
@@ -43,6 +45,7 @@ public class TrainController {
 	}
 	
 	@GetMapping("/trains")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") // Kalo user login sebagai user biasa atau admin boleh akses
 	public ResponseEntity<Map<String, Object>> getTrains(
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "3") int size,
