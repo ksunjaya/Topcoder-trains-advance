@@ -1,10 +1,101 @@
-# Topcoder-trains-advance
- Topcoder : Train Manager Advance
+# Topcoder Train Manager Advanced
+This is the Advance Level Competition
+
+Steve’s station receives an annual award from the government because of the train's quality management between all stations across the country.
+
+Because of the award, the government added more trains to be maintained by Steve’s stations. With the addition of new trains, supervisors give extra protection for employees to enter stations for workdays.
+
+Solving this problem you learn:
+
+    Create Pagination and sort for the required endpoints
+    Support multiple Sort for the endpoints
+    Create initial data for the user table
+    Add User Authentication for endpoints
  
- 
+## Postgre SQL Installation
+
+Train Manager requires [PostgreSql](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) to run.
+For installation on Mac OS, please follow [this tutorial](https://www.postgresqltutorial.com/install-postgresql-macos/). Set password to `password` and port to `5432`
+
+Add Postgre Repository :
+```sh
+sudo apt-get install wget ca-certificates
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+```
+
+Update Package List :
+```sh
+sudo apt-get update
+```
+
+Install Postgre SQL :
+```sh
+sudo apt-get install postgresql postgresql-contrib
+```
+
+
+## Create A New Database
+Train Manager requires a database `train` installed manually. To establish a connection, log into the postgres account with:
+```sh
+sudo su - postgres
+```
+Now open a postgress prompt using the command:
+```sh
+psql
+```
+
+Create a new database `trainadvanced`:
+```sh
+create database trainadvanced;
+```
+
+## Run
+Untuk menjalankan aplikasi tanpa perlu di build
+```sh
+mvn spring-boot:run
+```
+
+## Build
+Jalankan maven build dengan command dibawah ini
+```sh
+mvn clean package spring-boot:repackage
+```
+
+Untuk menjalankan aplikasi setelah di build
+```sh
+java -jar target/trains-0.0.1-SNAPSHOT.jar 
+```
+
+## Memasukkan Role ke dalam database
+Ada dua role yang dapat diberikan kepada user, yaitu `Admin` dan `User`. Sebelum pengguna baru dapat melakukan registrasi, Anda perlu memasukkan kedua tipe role tersebut ke dalam database. Untuk itu, silahkan menjalankan query dibawah ini pada database `trainadvanced`
+
+CATATAN : Jalankan (run) aplikasi terlebih dahulu minimal satu kali untuk memastikan table `Role` sudah terbuat oleh Aplikasi, karena table akan terbuat otomatis ketika aplikasi dijalankan.
+
+```sql
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+INSERT INTO roles(name) VALUES('ROLE_USER');
+```
+
+## Authentication
+Registrasi dapat dilakukan pada endpoint `POST localhost:8080/api/auth/signup` dengan body seperti dibawah ini
+```json
+{ "username" : "admin", "email" : "admin@admin.com", "password":"password", "role": ["admin"] }
+```
+
+Login dapat dilakukan pada endpoint `POST localhost:8080/api/auth/signin` dengan body seperti berikut
+```json
+{ "username" : "admin", "password" : "password" }
+```
+Setelah login Anda akan mendapatkan Token. Untuk melakukan request berikutnya, gunakan token tersebut pada Header (misalnya token `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0NzIyNzc1NywiZXhwIjoxNjQ3MzE0MTU3fQ.T_c9Xcmm6eUojHQ0PSO6iU7uGHf2g3q4DTYqI7dSWZiX5CcgEoIMIdY8mkcF--L0xPqtZM2uTuGY77xXxEGmxw`)
+```
+KEY : Authorization
+VALUE : Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0NzIyNzc1NywiZXhwIjoxNjQ3MzE0MTU3fQ.T_c9Xcmm6eUojHQ0PSO6iU7uGHf2g3q4DTYqI7dSWZiX5CcgEoIMIdY8mkcF--L0xPqtZM2uTuGY77xXxEGmxw
+```
+
 ## Memasukkan Data Dummy
 
-Request POST ke ```localhost:8080/api/trains``` dengan data raw dalam format JSON :
+Request POST ke ```POST localhost:8080/api/trains``` dengan data raw dalam format JSON :
 
 ```json
 [
@@ -121,3 +212,9 @@ Request POST ke ```localhost:8080/api/trains``` dengan data raw dalam format JSO
 ]
 
 ```
+
+## Contoh Implementasi Pagination & Sortir
+- sort by id, descending & pagination page=0, size=3. `GET /api/trains`
+- sort by name, ascending & pagination page=0, size=3. `GET /api/trains?sort=name,asc`
+- order by column max-speed, descending, then order by column name, ascending & pagination page=0, size=3. `GET /api/trains?sort=max-speed,desc&sort=name,asc`
+- order by column max-speed, descending, then order by column name, ascending & pagination page=1, size=5. `GET /api/trains?page=1&size=5&sort=max-speed,desc&sort=name,asc`
