@@ -51,6 +51,7 @@ public class TrainController {
 			@RequestParam(defaultValue = "3") int size,
 			@RequestParam(defaultValue = "id,desc") String[] sort){
 		
+		Map<String, Object> response = new HashMap<>();
 		try {
 			List<Order> orders = new ArrayList<Order>();
 			if(sort[0].contains(",")) {
@@ -58,13 +59,24 @@ public class TrainController {
 				for(String sortOrder : sort) {
 					String[] _sort = sortOrder.split(",");
 					if(_sort[0].equals("max-speed")) _sort[0] = "maxSpeed";
+					if(_sort[0].equals("amenities") || _sort[0].equals("train-frequency")) {
+						//untuk sortir yang illegal / tidak didukung
+						response.put("message", "Invalid Parameter");
+						return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+					}
 					orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
 				}
 			} else {
 				//sort=[field,direction]
 				if(sort[0].equals("max-speed")) sort[0] = "maxSpeed";
+				if(sort[0].equals("amenities") || sort[0].equals("train-frequency")) {
+					//untuk sortir yang illegal / tidak didukung
+					response.put("message", "Invalid Parameter");
+					return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+				}
 				orders.add(new Order(getSortDirection(sort[1]), sort[0]));
 			}
+			
 			
 			List<Train> trains = new ArrayList<Train>();
 			Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
@@ -73,7 +85,6 @@ public class TrainController {
 			trains = pageTrains.getContent();
 			if(trains.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT); //kalau table nya kosong
 			
-			Map<String, Object> response = new HashMap<>();
 			response.put("trains", trains);
 			response.put("currentPage", pageTrains.getNumber());
 			response.put("totalItems", pageTrains.getTotalElements());
