@@ -87,7 +87,11 @@ Login dapat dilakukan pada endpoint `POST localhost:8080/api/auth/signin` dengan
 ```json
 { "username" : "admin", "password" : "password" }
 ```
-
+Setelah login Anda akan mendapatkan Token. Untuk melakukan request berikutnya, gunakan token tersebut pada Header (misalnya token `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0NzIyNzc1NywiZXhwIjoxNjQ3MzE0MTU3fQ.T_c9Xcmm6eUojHQ0PSO6iU7uGHf2g3q4DTYqI7dSWZiX5CcgEoIMIdY8mkcF--L0xPqtZM2uTuGY77xXxEGmxw`)
+```
+KEY : Authorization
+VALUE : Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0NzIyNzc1NywiZXhwIjoxNjQ3MzE0MTU3fQ.T_c9Xcmm6eUojHQ0PSO6iU7uGHf2g3q4DTYqI7dSWZiX5CcgEoIMIdY8mkcF--L0xPqtZM2uTuGY77xXxEGmxw
+```
 
 ## Memasukkan Data Dummy
 
@@ -208,3 +212,9 @@ Request POST ke ```POST localhost:8080/api/trains``` dengan data raw dalam forma
 ]
 
 ```
+
+## Contoh Implementasi Pagination & Sortir
+- sort by id, descending & pagination page=0, size=3. `GET /api/trains`
+- sort by name, ascending & pagination page=0, size=3. `GET /api/trains?sort=name,asc`
+- order by column max-speed, descending, then order by column name, ascending & pagination page=0, size=3. `GET /api/trains?sort=max-speed,desc&sort=name,asc`
+- order by column max-speed, descending, then order by column name, ascending & pagination page=1, size=5. `GET /api/trains?page=1&size=5&sort=max-speed,desc&sort=name,asc`
