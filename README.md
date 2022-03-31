@@ -34,6 +34,14 @@ Install Postgre SQL :
 sudo apt-get install postgresql postgresql-contrib
 ```
 
+Ganti password pada Linux : 
+```sh
+sudo -u postgres psql
+
+postgres=# \password postgres
+Enter new password: <new-password>
+postgres=# \q
+```
 
 ## Create A New Database
 Train Manager requires a database `train` installed manually. To establish a connection, log into the postgres account with:
@@ -71,6 +79,11 @@ java -jar target/trains-0.0.1-SNAPSHOT.jar
 Ada dua role yang dapat diberikan kepada user, yaitu `Admin` dan `User`. Sebelum pengguna baru dapat melakukan registrasi, Anda perlu memasukkan kedua tipe role tersebut ke dalam database. Untuk itu, silahkan menjalankan query dibawah ini pada database `trainadvanced`
 
 CATATAN : Jalankan (run) aplikasi terlebih dahulu minimal satu kali untuk memastikan table `Role` sudah terbuat oleh Aplikasi, karena table akan terbuat otomatis ketika aplikasi dijalankan.
+
+Untuk masuk ke dalam database dari terminal
+```sh
+sudo -u postgres psql trainadvanced
+```
 
 ```sql
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
