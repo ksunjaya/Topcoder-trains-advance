@@ -2,6 +2,8 @@ package com.ProyekInformatika.TrainManager.Model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "trains")
 public class Train {
@@ -16,18 +18,23 @@ public class Train {
     private String description;
 
     @Column(name = "[distance-between-stop]", nullable = false)
+    @JsonProperty("distance-between-stop")
     private String distanceBetweenStop;
 
     @Column(name = "[max-speed]", nullable = false)
+    @JsonProperty("max-speed")
     private String maxSpeed;
 
     @Column(name = "[sharing-tracks]", nullable = false)
+    @JsonProperty("sharing-tracks")
     private Boolean sharingTracks;
 
     @Column(name = "[grade-crossing]", nullable = false)
+    @JsonProperty("grade-crossing")
     private Boolean gradeCrossing;
 
     @Column(name = "[train-frequency]", nullable = false)
+    @JsonProperty("train-frequency")
     private String trainFrequency;
 
     @Column(name = "amenities", nullable = false)
