@@ -32,7 +32,7 @@ public class TrainController {
 	TrainRepository trainRepository;
 	
 	@PostMapping("/trains")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") // Kalo user login sebagai user biasa atau admin boleh akses
+	@PreAuthorize("hasRole('USER')") // Kalo user login sebagai user biasa atau admin boleh akses
 	public ResponseEntity<List<Train>> createTrain(@RequestBody List<Train> trains){
 		try {
 			for(Train t : trains) System.out.println(t.toString());
@@ -45,7 +45,7 @@ public class TrainController {
 	}
 	
 	@GetMapping("/trains")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") // Kalo user login sebagai user biasa atau admin boleh akses
+	@PreAuthorize("hasRole('ADMIN')") // Kalo user login sebagai user biasa atau admin boleh akses
 	public ResponseEntity<Map<String, Object>> getTrains(
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "3") int size,
