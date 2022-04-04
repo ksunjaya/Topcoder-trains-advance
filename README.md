@@ -17,14 +17,14 @@ Solving this problem you learn:
 Train Manager requires [PostgreSql](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) to run.
 For installation on Mac OS, please follow [this tutorial](https://www.postgresqltutorial.com/install-postgresql-macos/). Set password to `password` and port to `5432`
 
-Add Postgre Repository :
+Add Postgre Repository (Optional) :
 ```sh
 sudo apt-get install wget ca-certificates
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 ```
 
-Update Package List :
+Update Package List (Optional) :
 ```sh
 sudo apt-get update
 ```
@@ -34,7 +34,7 @@ Install Postgre SQL :
 sudo apt-get install postgresql postgresql-contrib
 ```
 
-Ganti password pada Linux : 
+Ganti password pada Linux (hanya perlu dilakukan jika instalasi pada OS linux): 
 ```sh
 sudo -u postgres psql
 
@@ -44,16 +44,16 @@ postgres=# \q
 ```
 
 ## Create A New Database
-Train Manager requires a database `train` installed manually. To establish a connection, log into the postgres account with:
+API perlu database `train` dibuat secara manual (Untuk tabel, API akan membuatnya secara otomatis). Pertama -tama kita perlu masuk ke dalam postgres
 ```sh
 sudo su - postgres
 ```
-Now open a postgress prompt using the command:
+Buka postgres prompt dengan command:
 ```sh
 psql
 ```
 
-Create a new database `trainadvanced`:
+Buatlah database `trainadvanced`:
 ```sh
 create database trainadvanced;
 ```
