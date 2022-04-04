@@ -12,6 +12,10 @@ Solving this problem you learn:
     Create initial data for the user table
     Add User Authentication for endpoints
  
+## Prerequisite
+- JDK with minimum version 11.0
+- Maven
+
 ## Postgre SQL Installation
 
 Train Manager requires [PostgreSql](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) to run.
